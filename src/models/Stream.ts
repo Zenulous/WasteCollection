@@ -1,21 +1,20 @@
 import {
+  CosmosDateTime,
   CosmosPartitionKey,
   CosmosUniqueKey,
-} from '@nestjs/azure-database';
+} from "@nestjs/azure-database";
 
-@CosmosPartitionKey('id')
+@CosmosPartitionKey("id")
 export class Stream {
-
   @CosmosUniqueKey() id: string;
   _active: boolean;
   sizes: Size[];
   type: string;
-  stream_product_id: number;
-  unit_weight: number;
+  streamProductId: number;
+  unitWeight: number;
   description: Description;
   name: Name;
-  _created: string;
-  _modified: string;
+  @CosmosDateTime() _created: Date;
   image: string;
   _rid: string;
   _self: string;
@@ -25,23 +24,22 @@ export class Stream {
 }
 
 interface Description {
-  'nl-nl': string;
-  'en-gb': string;
+  "nl-nl": string;
+  "en-gb": string;
 }
 
 interface Name {
-  'nl-nl': string;
-  'en-gb': string;
+  "nl-nl": string;
+  "en-gb": string;
 }
-
 
 interface Size {
   size: number;
-  size_display: string;
-  container_product_id: number;
+  sizeDisplay: string;
+  containerProductId: number;
   image: string;
-  unit_price_purchase?: any;
-  unit_price_rent: number;
-  unit_price_placement: number;
-  unit_price_pickup: number;
+  unitPricePurchase?: any;
+  unitPriceRent: number;
+  unitPricePlacement: number;
+  unitPricePickup: number;
 }
