@@ -12,15 +12,29 @@ import { ContainersController } from "./controllers/ContainersController";
 import { ContainerProvider } from "./providers/ContainerProvider";
 import { Container as WasteContainer } from "src/models/Container";
 import { SchedulesController } from "./controllers/SchedulesController";
+import { ManagedIdentityCredential } from "@azure/identity";
 dotenv.config();
 
 @Module({
   imports: [
-    AzureCosmosDbModule.forRoot({
-      dbName: process.env.AZURE_COSMOS_DB_NAME,
-      endpoint: process.env.AZURE_COSMOS_DB_ENDPOINT,
-      key: process.env.AZURE_COSMOS_DB_KEY,
-    }),
+    ...(process.env.NODE_ENV === "development"
+      ? [
+          AzureCosmosDbModule.forRoot({
+            dbName: process.env.AZURE_COSMOS_DB_NAME,
+            endpoint: process.env.AZURE_COSMOS_DB_ENDPOINT,
+            key: process.env.AZURE_COSMOS_DB_KEY,
+          }),
+        ]
+      : [
+          AzureCosmosDbModule.forRoot({
+            dbName: process.env.AZURE_COSMOS_DB_NAME,
+            // Passwordless AAD authentication in production
+            aadCredentials: new ManagedIdentityCredential(
+              process.env.MANAGED_IDENTITY_CLIENT_ID,
+            ),
+            endpoint: process.env.AZURE_COSMOS_DB_ENDPOINT,
+          }),
+        ]),
     AzureCosmosDbModule.forFeature([
       { dto: Stream },
       { dto: Logistic },
