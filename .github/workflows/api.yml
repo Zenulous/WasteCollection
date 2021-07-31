@@ -6,15 +6,18 @@ on:
       - api/**
       - .github/workflows/api.yml
 env:
-  AZURE_WEBAPP_NAME: wastecollection-api # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: "." # set this to the path to your web app project, defaults to the repository root
-  NODE_VERSION: "14.x" # set this to the node version to use
+  AZURE_WEBAPP_NAME: wastecollection-api
+  AZURE_WEBAPP_PACKAGE_PATH: "./api"
+  NODE_VERSION: "14.x"
 
 jobs:
   build-and-deploy:
     name: Build and Deploy
     runs-on: ubuntu-latest
     environment: production
+    defaults:
+      run:
+        working-directory: api
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ env.NODE_VERSION }}
