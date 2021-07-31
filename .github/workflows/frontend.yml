@@ -1,0 +1,30 @@
+name: Azure Static Web Apps CI/CD
+
+on:
+  push:
+    branches:
+      - master
+  paths:
+    - Frontend/**
+    - .github/workflows/frontend.yml
+
+jobs:
+  build_and_deploy_job:
+    runs-on: ubuntu-latest
+    name: Build and Deploy Job
+    defaults:
+      run:
+        working-directory: ./Frontend
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+      - name: Build And Deploy
+        id: builddeploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_CALM_ROCK_0F8B4D203 }}
+          action: "upload"
+          app_location: "/Frontend"
+          api_location: ""
+          output_location: "out"

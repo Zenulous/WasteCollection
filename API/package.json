@@ -12,7 +12,7 @@
     "debug": "nest start --debug --watch",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "check": "npm run lint && nest build",
-    "prepare": "husky install"
+    "prepare": "cd .. && husky install API/.husky"
   },
   "dependencies": {
     "@azure/identity": "^1.5.0",
