@@ -7,7 +7,7 @@ on:
       - .github/workflows/api.yml
 env:
   AZURE_WEBAPP_NAME: wastecollection-api
-  AZURE_WEBAPP_PACKAGE_PATH: "./api"
+  AZURE_WEBAPP_PACKAGE_PATH: "./API"
   NODE_VERSION: "14.x"
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
     environment: production
     defaults:
       run:
-        working-directory: api
+        working-directory: API
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ env.NODE_VERSION }}
