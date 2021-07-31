@@ -5,12 +5,13 @@ import { StreamsControler } from "./controllers/StreamsController";
 import { Container } from "@azure/cosmos";
 import * as dotenv from "dotenv";
 import { Stream } from "./models/Stream";
-import { LogisticControler } from "./controllers/LogisticController";
+import { LogisticsController } from "./controllers/LogisticsController";
 import { LogisticProvider } from "./providers/LogisticProvider";
 import { Logistic } from "./models/Logistic";
-import { ContainerControler } from "./controllers/ContainerController";
+import { ContainersController } from "./controllers/ContainersController";
 import { ContainerProvider } from "./providers/ContainerProvider";
 import { Container as WasteContainer } from "src/models/Container";
+import { SchedulesController } from "./controllers/SchedulesController";
 dotenv.config();
 
 @Module({
@@ -26,7 +27,12 @@ dotenv.config();
       { dto: WasteContainer },
     ]),
   ],
-  controllers: [StreamsControler, LogisticControler, ContainerControler],
+  controllers: [
+    StreamsControler,
+    LogisticsController,
+    ContainersController,
+    SchedulesController,
+  ],
   providers: [StreamProvider, LogisticProvider, ContainerProvider, Container],
 })
 export class AppModule {}

@@ -5,7 +5,7 @@ export class Logistic {
   @CosmosUniqueKey() id: string;
   name: Name;
   _active: boolean;
-  supportedWaste: SupportedWaste[];
+  supportedWasteCollections: SupportedWasteCollections[];
   _rid: string;
   _self: string;
   _etag: string;
@@ -13,14 +13,14 @@ export class Logistic {
   _ts: number;
 }
 
-interface SupportedWaste {
+export interface SupportedWasteCollections {
   supportedWasteStreamIds: number[];
   supportedContainerIds: number[];
   availableAreas: AvailableArea[];
   availability: Availability;
 }
 
-interface Availability {
+export interface Availability {
   "0"?: AvailabilityOnDay;
   "1"?: AvailabilityOnDay;
   "2"?: AvailabilityOnDay;
@@ -47,7 +47,7 @@ interface Timeslot {
 
 interface AvailableArea {
   type: number;
-  value: number[];
+  value: string[];
 }
 
 interface Name {

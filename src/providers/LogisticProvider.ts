@@ -27,7 +27,6 @@ export class LogisticProvider implements Provider {
     const querySpec = {
       query: "SELECT * FROM root r",
     };
-    console.log(this.container);
 
     const results = await this.container.items
       .query<any>(querySpec, {})
@@ -49,6 +48,6 @@ export class LogisticProvider implements Provider {
     const results = await this.container.items
       .query<any>(querySpec, {})
       .fetchAll();
-    return results.resources.shift();
+    return results.resources.shift() || [];
   }
 }

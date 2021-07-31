@@ -50,6 +50,6 @@ export class StreamProvider implements Provider {
     const results = await this.container.items
       .query<any>(querySpec, {})
       .fetchAll();
-    return results.resources.shift();
+    return results.resources.shift() || [];
   }
 }
