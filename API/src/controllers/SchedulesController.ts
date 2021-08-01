@@ -6,8 +6,8 @@ import {
   Query,
 } from "@nestjs/common";
 import { IsNotEmpty, IsNumberString } from "class-validator";
-import { Availability } from "src/models/Logistic";
 import { LogisticProvider } from "src/providers/LogisticProvider";
+import { PostalCodeSchedule } from "../../../Shared";
 class scheduleDto {
   @IsNotEmpty()
   @IsNumberString()
@@ -102,10 +102,4 @@ export class SchedulesController {
     });
     return supportedWasteCollections;
   }
-}
-interface PostalCodeSchedule {
-  logisticId: string;
-  supportedWasteStreamIds: number[];
-  supportedContainerIds: number[];
-  availability: Availability;
 }

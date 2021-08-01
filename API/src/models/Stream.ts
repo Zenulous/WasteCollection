@@ -3,9 +3,14 @@ import {
   CosmosPartitionKey,
   CosmosUniqueKey,
 } from "@nestjs/azure-database";
-
+import {
+  Description,
+  Name,
+  Size,
+  Stream as IStream,
+} from "../../../Shared/Stream";
 @CosmosPartitionKey("id")
-export class Stream {
+export class Stream implements IStream {
   @CosmosUniqueKey() id: string;
   _active: boolean;
   sizes: Size[];
@@ -21,25 +26,4 @@ export class Stream {
   _etag: string;
   _attachments: string;
   _ts: number;
-}
-
-interface Description {
-  "nl-nl": string;
-  "en-gb": string;
-}
-
-interface Name {
-  "nl-nl": string;
-  "en-gb": string;
-}
-
-interface Size {
-  size: number;
-  sizeDisplay: string;
-  containerProductId: number;
-  image: string;
-  unitPricePurchase?: any;
-  unitPriceRent: number;
-  unitPricePlacement: number;
-  unitPricePickup: number;
 }

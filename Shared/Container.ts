@@ -1,8 +1,5 @@
-import { CosmosDateTime, CosmosUniqueKey } from "@nestjs/azure-database";
-import { Container as IContainer } from "../../../Shared/Container";
-
-export class Container implements IContainer {
-  @CosmosUniqueKey() id: string;
+export interface Container {
+  id: string;
   size: number;
   containerProductId: number;
   type: string;
@@ -10,7 +7,7 @@ export class Container implements IContainer {
   description: Description;
   name: Description;
   _active: boolean;
-  @CosmosDateTime() _created: Date;
+  _created: Date;
   unitPricePurchase?: any;
   unitPriceRent?: any;
   unitPricePlacement: number;
@@ -21,7 +18,7 @@ export class Container implements IContainer {
   _ts: number;
 }
 
-interface Description {
+export interface Description {
   "en-gb": string;
   "nl-nl": string;
 }
