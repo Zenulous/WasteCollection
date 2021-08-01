@@ -7,7 +7,7 @@
     "build": "next build && next export",
     "start": "next start",
     "prepare": "cd .. && husky install Frontend/.husky",
-    "check": "eslint . --ext .ts,.tsx --fix"
+    "check": "eslint . --ext .ts,.tsx --fix && npm run build"
   },
   "dependencies": {
     "@fluentui/react": "^8.26.0",

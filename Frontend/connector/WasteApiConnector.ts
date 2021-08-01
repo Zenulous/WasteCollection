@@ -2,10 +2,13 @@ import axios from "axios";
 import { Logistic } from "../../Shared/Logistic";
 import { Stream } from "../../Shared/Stream";
 import { Container } from "../../Shared/Container";
+import { PostalCodeSchedule } from "../../Shared";
 export class WasteApiConnector {
   static baseEndpoint = process.env.NEXT_PUBLIC_WASTE_API_ENDPOINT + "/api/";
   // TODO: shared model
-  static async retrieveWasteSchedules(postalCode: string): Promise<any> {
+  static async retrieveWasteSchedules(
+    postalCode: string
+  ): Promise<PostalCodeSchedule[]> {
     return (
       await axios.get(WasteApiConnector.baseEndpoint + "schedules", {
         params: { postalCode },
