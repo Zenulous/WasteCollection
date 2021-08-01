@@ -7,7 +7,7 @@ import {
 } from "@nestjs/common";
 import { IsNotEmpty, IsNumberString } from "class-validator";
 import { LogisticProvider } from "src/providers/LogisticProvider";
-import { PostalCodeSchedule } from "../../../Shared";
+import { PostalCodeSchedule } from "../../../Shared/PostalCodeSchedule";
 class scheduleDto {
   @IsNotEmpty()
   @IsNumberString()

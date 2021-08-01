@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import React, { useState } from "react";
-import { PostalCodeSchedule } from "../../Shared";
+import { PostalCodeSchedule } from "../../Shared/PostalCodeSchedule";
 
 export const WasteSchedules = React.createContext({
   wasteSchedules: [{}] as PostalCodeSchedule[],

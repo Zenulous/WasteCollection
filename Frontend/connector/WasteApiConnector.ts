@@ -2,7 +2,7 @@ import axios from "axios";
 import { Logistic } from "../../Shared/Logistic";
 import { Stream } from "../../Shared/Stream";
 import { Container } from "../../Shared/Container";
-import { PostalCodeSchedule } from "../../Shared";
+import { PostalCodeSchedule } from "../../Shared/PostalCodeSchedule";
 export class WasteApiConnector {
   static baseEndpoint = process.env.NEXT_PUBLIC_WASTE_API_ENDPOINT + "/api/";
   // TODO: shared model

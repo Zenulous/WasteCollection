@@ -18,23 +18,22 @@ export interface SupportedWasteCollections {
 }
 
 export interface Availability {
-  "0"?: AvailabilityOnDay;
-  "1"?: AvailabilityOnDay;
-  "2"?: AvailabilityOnDay;
-  "3"?: AvailabilityOnDay;
-  "4"?: AvailabilityOnDay;
-  "5"?: AvailabilityOnDay;
-  "6"?: AvailabilityOnDay;
+  "0": AvailabilityOnDay | null;
+  "1": AvailabilityOnDay | null;
+  "2": AvailabilityOnDay | null;
+  "3": AvailabilityOnDay | null;
+  "4": AvailabilityOnDay | null;
+  "5": AvailabilityOnDay | null;
+  "6": AvailabilityOnDay | null;
 }
-
 interface AvailabilityOnDay {
-  restrictions?: Restriction;
+  restrictions: Restriction[] | null;
   timeslots: Timeslot[];
 }
 
 interface Restriction {
   type: number;
-  value: string;
+  value: number;
 }
 
 interface Timeslot {
