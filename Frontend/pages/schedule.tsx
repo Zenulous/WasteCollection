@@ -144,6 +144,7 @@ export default function Schedule(): JSX.Element {
                 Supported waste streams:{" "}
                 {schedule.supportedWasteStreamIds.map(streamId => {
                   return (
+                    // eslint-disable-next-line react/jsx-key
                     <p>
                       {streams.find(stream => {
                         return stream.streamProductId === streamId;
