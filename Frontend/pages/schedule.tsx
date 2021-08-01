@@ -7,7 +7,7 @@ import { Flex } from "../components/Flex";
 import { Logistic } from "../../Shared/Logistic";
 import { Stream } from "../../Shared/Stream";
 import { Container } from "../../Shared/Container";
-import { PostalCodeSchedule } from "../../Shared";
+import { PostalCodeSchedule } from "../../Shared/PostalCodeSchedule";
 export default function Schedule(): JSX.Element {
   const { wasteSchedules } = React.useContext(WasteSchedules);
   const [containers, setContainers] = React.useState<Container[]>([]);
