@@ -3,7 +3,7 @@ on:
     branches:
       - master
     paths:
-      - api/**
+      - API/**
       - .github/workflows/api.yml
 env:
   AZURE_WEBAPP_NAME: wastecollection-api
