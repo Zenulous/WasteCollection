@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { WasteSchedules } from "./_app";
 import { ContentContainer } from "../components/ContentContainer";
 import { Title } from "../components/Title";
-export default function Home() {
+export default function Home(): JSX.Element {
   const router = useRouter();
   const { wasteSchedules, setWasteSchedules } =
     React.useContext(WasteSchedules);
