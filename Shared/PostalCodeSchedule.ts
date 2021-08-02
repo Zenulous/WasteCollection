@@ -5,6 +5,7 @@ export interface PostalCodeSchedule {
   availability: Availability;
 }
 export interface Availability {
+  [x: string]: AvailabilityOnDay | null;
   "0": AvailabilityOnDay | null;
   "1": AvailabilityOnDay | null;
   "2": AvailabilityOnDay | null;

@@ -7,7 +7,11 @@ import { Flex } from "../components/Flex";
 import { Logistic } from "../../Shared/Logistic";
 import { Stream } from "../../Shared/Stream";
 import { Container } from "../../Shared/Container";
-import { PostalCodeSchedule } from "../../Shared/PostalCodeSchedule";
+import { Image } from "@fluentui/react";
+import {
+  Availability,
+  PostalCodeSchedule,
+} from "../../Shared/PostalCodeSchedule";
 export default function Schedule(): JSX.Element {
   const { wasteSchedules } = React.useContext(WasteSchedules);
   const [containers, setContainers] = React.useState<Container[]>([]);
@@ -20,106 +24,16 @@ export default function Schedule(): JSX.Element {
       setLogistics(await WasteApiConnector.retrieveLogistics());
       setStreams(await WasteApiConnector.retrieveStreams());
     }
-
     getDisplayData();
   }, []);
   return (
     <ContentContainer>
       {" "}
       <Title>Your available waste streams</Title>
-      {visualiseWasteSchedules([
-        {
-          logisticId: "0",
-          supportedWasteStreamIds: [1, 4, 5, 6, 7],
-          supportedContainerIds: [1, 4, 5, 6, 7],
-          availability: {
-            "0": {
-              restrictions: null,
-              timeslots: [
-                {
-                  start: "0000-01-01T14:00:00+01:00",
-                  end: "0000-01-01T16:00:00+01:00",
-                },
-              ],
-            },
-            "1": {
-              restrictions: null,
-              timeslots: [
-                {
-                  start: "0000-01-01T14:00:00+01:00",
-                  end: "0000-01-01T16:00:00+01:00",
-                },
-              ],
-            },
-            "2": {
-              restrictions: null,
-              timeslots: [
-                {
-                  start: "0000-01-01T14:00:00+01:00",
-                  end: "0000-01-01T16:00:00+01:00",
-                },
-              ],
-            },
-            "3": {
-              restrictions: null,
-              timeslots: [
-                {
-                  start: "0000-01-01T14:00:00+01:00",
-                  end: "0000-01-01T16:00:00+01:00",
-                },
-              ],
-            },
-            "4": null,
-            "5": null,
-            "6": null,
-          },
-        },
-        {
-          logisticId: "1",
-          supportedWasteStreamIds: [1, 2, 3],
-          supportedContainerIds: [1, 2, 3],
-          availability: {
-            "0": {
-              restrictions: null,
-              timeslots: [
-                {
-                  start: "0000-01-01T14:00:00+01:00",
-                  end: "0000-01-01T16:00:00+01:00",
-                },
-              ],
-            },
-            "1": null,
-            "2": {
-              restrictions: null,
-              timeslots: [
-                {
-                  start: "0000-01-01T14:00:00+01:00",
-                  end: "0000-01-01T16:00:00+01:00",
-                },
-              ],
-            },
-            "3": null,
-            "4": {
-              restrictions: [
-                {
-                  type: 0,
-                  value: 2,
-                },
-              ],
-              timeslots: [
-                {
-                  start: "0000-01-01T08:00:00+01:00",
-                  end: "0000-01-01T10:00:00+01:00",
-                },
-              ],
-            },
-            "5": null,
-            "6": null,
-          },
-        },
-      ])}
+      {visualiseWasteSchedules(wasteSchedules)}
     </ContentContainer>
   );
+
   function visualiseWasteSchedules(wasteSchedules: PostalCodeSchedule[]) {
     const supportedWasteStreamIds: any[] = [];
     for (const schedule of wasteSchedules) {
@@ -139,35 +53,57 @@ export default function Schedule(): JSX.Element {
           return (
             // eslint-disable-next-line react/jsx-key
             <div>
-              <div>Logistic provider name: {logistic?.name["en-gb"]}</div>
               <div>
-                Supported waste streams:{" "}
+                <b>Logistic provider name: {logistic?.name["en-gb"]}</b>
+              </div>
+              <div>
+                <b>Supported waste types: </b>
                 {schedule.supportedWasteStreamIds.map(streamId => {
+                  const stream = streams.find(stream => {
+                    return stream.streamProductId === streamId;
+                  });
                   return (
                     // eslint-disable-next-line react/jsx-key
                     <p>
-                      {streams.find(stream => {
-                        return stream.streamProductId === streamId;
-                      })?.name["en-gb"] || streamId + "unknown"}
+                      {stream ? (
+                        <p>
+                          <Image
+                            width={100}
+                            height={100}
+                            src={stream.image}
+                          ></Image>{" "}
+                          {stream.name["en-gb"]}{" "}
+                        </p>
+                      ) : (
+                        streamId +
+                        " (unknown waste stream: missing from sample data)"
+                      )}
                     </p>
                   );
                 })}
               </div>
               <div>
-                Available timeslots: <br></br>
-                {`Monday ${schedule.availability[0] || "no"}`}
+                <b>Supported container types: </b>
+                {schedule.supportedContainerIds.map(containerId => {
+                  const container = containers.find(container => {
+                    return container.containerProductId === containerId;
+                  });
+                  return (
+                    // eslint-disable-next-line react/jsx-key
+                    <p>
+                      {container
+                        ? container.name["en-gb"] +
+                          ` (${container?.description["en-gb"]})`
+                        : containerId +
+                          " (unknown container: missing from sample data)"}
+                    </p>
+                  );
+                })}
+              </div>
+              <div>
+                <b>Available timeslots:</b>
+                {parseScheduleAvailability(schedule.availability)}
                 <br></br>
-                {`Tuesday ${schedule.availability[1] || "no"}`}
-                <br></br>
-                {`Wednesday ${schedule.availability[2] || "no"}`}
-                <br></br>
-                {`Thursday ${schedule.availability[3] || "no"}`}
-                <br></br>
-                {`Friday ${schedule.availability[4] || "no"}`}
-                <br></br>
-                {`Saturday ${schedule.availability[5] || "no"}`}
-                <br></br>
-                {`Sunday ${schedule.availability[6] || "no"}`}
               </div>
             </div>
           );
@@ -175,4 +111,64 @@ export default function Schedule(): JSX.Element {
       </Flex>
     );
   }
+}
+
+function parseScheduleAvailability(availability: Availability): JSX.Element {
+  const noTimeSlotAvailable = "No timeslot available";
+  const rows = [];
+  let text = "";
+  for (let index = 0; index < 7; index++) {
+    text = "";
+    if (availability[index]?.restrictions) {
+      // Currently there can only be 1 restriction, but this can be extended in the future
+      switch (availability[index]?.restrictions![0].type) {
+        case 0:
+          text = `Available every ${
+            availability[index]?.restrictions![0].value
+          } weeks from `;
+      }
+    }
+    if (!availability[index]) {
+      text += noTimeSlotAvailable;
+    } else {
+      for (const timeslot of availability[index]!.timeslots) {
+        text += " - ";
+        const start = new Date(timeslot.start!).getHours();
+        const end = new Date(timeslot.end!).getHours();
+
+        text += `${start} to  ${end}`;
+      }
+    }
+
+    switch (index) {
+      case 0:
+        text = "Monday " + text;
+        break;
+      case 1:
+        text = "Tuesday " + text;
+        break;
+      case 2:
+        text = "Wednesday " + text;
+        break;
+      case 3:
+        text = "Thursday " + text;
+        break;
+      case 4:
+        text = "Friday " + text;
+        break;
+      case 5:
+        text = "Saturday " + text;
+        break;
+      case 6:
+        text = "Sunday " + text;
+        break;
+      default:
+        break;
+    }
+
+    rows.push(text);
+    rows.push(<br></br>);
+  }
+
+  return <div>{rows}</div>;
 }

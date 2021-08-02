@@ -21,7 +21,12 @@ export default function Home() {
       );
       setWasteSchedules(wasteSchedules);
       console.log(wasteSchedules);
-
+      if (wasteSchedules.length === 0) {
+        toast("There are no waste streams available for this postal code", {
+          type: "warning",
+        });
+        return;
+      }
       router.push("schedule");
     } catch {
       toast(
@@ -44,8 +49,7 @@ export default function Home() {
             width="40%"
             label="Enter your postal code (XXXX format)"
             onChange={event => {
-              console.log(event.currentTarget.value),
-                setPostalCode(event.currentTarget.value);
+              setPostalCode(event.currentTarget.value);
             }}
             required
           />
